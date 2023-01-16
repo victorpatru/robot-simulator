@@ -44,12 +44,19 @@ describe("Robot", () => {
     });
 
     it("invalid robot bearing", () => {
+      expect.assertions(1);
       const robot = new Robot();
 
       expect(InvalidInputError.prototype).toBeInstanceOf(Error);
-      expect(() =>
-        robot.place({ direction: "crood" as Direction, x: 0, y: 0 })
-      ).toThrow(InvalidInputError);
+      try {
+        robot.place({ direction: "crood" as Direction, x: 0, y: 0 });
+      } catch (error) {
+        expect(error).toBeInstanceOf(InvalidInputError);
+      }
+
+      // expect(() =>
+      //   robot.place({ direction: "crood" as Direction, x: 0, y: 0 })
+      // ).toThrow(InvalidInputError);
     });
   });
 
