@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/semi */
-import { Robot, InvalidInputError } from "./robot-simulator";
+import { Robot, InvalidInputError, Direction } from "./robot-simulator";
 
 function turnRight(robot: Robot): void {
   robot.evaluate("R");
@@ -43,15 +43,13 @@ describe("Robot", () => {
       expect(robot.coordinates).toEqual([-1, -1]);
     });
 
-    //TODO:
     it("invalid robot bearing", () => {
       const robot = new Robot();
 
       expect(InvalidInputError.prototype).toBeInstanceOf(Error);
-      //@ts-expect-error Throw on invalid input
-      expect(() => robot.place({ direction: "crood", x: 0, y: 0 })).toThrow(
-        InvalidInputError
-      );
+      expect(() =>
+        robot.place({ direction: "crood" as Direction, x: 0, y: 0 })
+      ).toThrow(InvalidInputError);
     });
   });
 

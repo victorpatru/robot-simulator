@@ -5,7 +5,7 @@ export class InvalidInputError extends Error {
   }
 }
 
-type Direction = "north" | "east" | "south" | "west";
+export type Direction = "north" | "east" | "south" | "west";
 type Coordinates = [number, number];
 
 export class Robot {
@@ -30,12 +30,12 @@ export class Robot {
     y: number;
     direction: Direction;
   }): void {
-    try {
+    if (["north", "east", "south", "west"].includes(direction)) {
       this.direction = direction;
       this.x = x;
       this.y = y;
-    } catch (err) {
-      throw new InvalidInputError("Please pass valid input");
+    } else {
+      throw new InvalidInputError("Please input valid input");
     }
   }
 
@@ -56,12 +56,11 @@ export class Robot {
     }
   }
 
-  makeMove(instruction: string): void {
+  performInstruction(instruction: string): void {
     const cardinalPoints: Array<Direction> = ["north", "east", "south", "west"];
 
     const cardinalIndex = cardinalPoints.indexOf(this.direction);
 
-    // Case statement
     switch (instruction) {
       case "R":
         this.direction =
@@ -77,6 +76,6 @@ export class Robot {
   }
 
   evaluate(instructions: string): any {
-    instructions.split("").map((inst) => this.makeMove(inst));
+    instructions.split("").map((inst) => this.performInstruction(inst));
   }
 }
